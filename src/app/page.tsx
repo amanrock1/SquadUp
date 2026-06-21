@@ -79,7 +79,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up stagger-1">
-            GamePool matches you with gamers who want the same multiplayer games.
+            SquadUp matches you with gamers who want the same multiplayer games.
             Team up, split costs, and start playing together.
           </p>
 
@@ -238,7 +238,7 @@ export default function LandingPage() {
                 Ready to Find Your Squad?
               </h2>
               <p className="text-text-secondary mb-8 max-w-md mx-auto">
-                Join thousands of gamers already matching on GamePool.
+                Join thousands of gamers already matching on SquadUp.
                 It&apos;s completely free to get started.
               </p>
               <Link href="/login">
@@ -256,10 +256,10 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Gamepad2 className="w-5 h-5 text-brand-400" />
-            <span className="text-sm font-bold text-text-primary">GamePool</span>
+            <span className="text-sm font-bold text-text-primary">SquadUp</span>
           </div>
           <p className="text-xs text-text-muted">
-            © 2026 GamePool. Made with ❤️ for gamers. Not affiliated with any game publisher.
+            © 2026 SquadUp. Made with ❤️ for gamers. Not affiliated with any game publisher.
           </p>
           <div className="flex gap-4">
             <span className="text-xs text-text-muted">No account sharing • No piracy • Just matching</span>

@@ -168,7 +168,7 @@ export function optimizeCost(gamePrice: number, userBudget: number): CostOptimiz
     if (suggestedGroupSize > 4) {
       tips.push('⚠️ Large groups can be hard to coordinate. Consider finding a sale instead.');
     }
-    tips.push('💡 Each person buys their own copy — GamePool never shares accounts');
+    tips.push('💡 Each person buys their own copy — SquadUp never shares accounts');
   }
 
   return {

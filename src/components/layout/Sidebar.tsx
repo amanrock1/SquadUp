@@ -44,7 +44,7 @@ export function Sidebar() {
       <div className="mt-4 pt-3 border-t border-white/[0.06]">
         <div className="flex items-center gap-2 px-2">
           <Flame className="w-3.5 h-3.5 text-[var(--color-accent)]" />
-          <span className="text-[11px] text-[var(--color-text-3)] font-medium">GamePool v1.0</span>
+          <span className="text-[11px] text-[var(--color-text-3)] font-medium">SquadUp v1.0</span>
         </div>
       </div>
     </aside>

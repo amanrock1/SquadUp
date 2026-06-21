@@ -38,7 +38,7 @@ export default function LoginPage() {
     try {
       if (isSignup) {
         await signup(email, password, username);
-        toast('success', 'Account created! Welcome to GamePool 🎮');
+        toast('success', 'Account created! Welcome to SquadUp 🎮');
       } else {
         await login(email, password);
         toast('success', 'Welcome back!');

@@ -9,8 +9,8 @@ import { ToastProvider } from '@/components/ui/Toast';
 import { Navbar } from '@/components/layout/Navbar';
 
 export const metadata: Metadata = {
-  title: 'GamePool — Find Gamers to Split Game Costs',
-  description: 'GamePool matches you with other gamers who want the same multiplayer games. Split costs, find your squad, and play together. Powered by smart AI matching.',
+  title: 'SquadUp — Find Gamers to Split Game Costs',
+  description: 'SquadUp matches you with other gamers who want the same multiplayer games. Split costs, find your squad, and play together. Powered by smart AI matching.',
   keywords: ['gaming', 'multiplayer', 'cost splitting', 'game matching', 'wishlist'],
 };
 

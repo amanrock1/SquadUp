@@ -190,7 +190,7 @@ export default function ProfilePage() {
           <div>
             <p className="text-sm font-medium text-text-primary">Your data is safe</p>
             <p className="text-xs text-text-muted">
-              GamePool never stores passwords, game credentials, or payment info. We only store what&apos;s needed for matching.
+              SquadUp never stores passwords, game credentials, or payment info. We only store what&apos;s needed for matching.
             </p>
           </div>
         </div>
