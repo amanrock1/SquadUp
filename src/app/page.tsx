@@ -1,268 +1,280 @@
 // ============================================================
-// Landing Page — Hero, Features, How It Works, CTA
-// Modern dark gaming aesthetic with animations
+// Landing Page — GamePool
+// Modern, premium startup aesthetic (Stripe/Linear/Discord Inspired)
 // ============================================================
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
-import {
-  Gamepad2, Users, Sparkles, Shield, IndianRupee, Zap,
-  ArrowRight, ListPlus, UserCheck, PartyPopper, Star,
-  Globe, TrendingUp, Heart
-} from 'lucide-react';
-
-// Animated counter hook
-function useCounter(target: number, duration: number = 2000) {
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    if (!started) return;
-    let start = 0;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [started, target, duration]);
-
-  return { count, start: () => setStarted(true) };
-}
+import { Gamepad2, Users, Shield, Zap, Globe, ChevronRight, CheckCircle2, MessageSquare, IndianRupee } from 'lucide-react';
 
 export default function LandingPage() {
-  const users = useCounter(2847);
-  const games = useCounter(156);
-  const groups = useCounter(432);
-
-  useEffect(() => {
-    // Start counters when component mounts (visible)
-    const timer = setTimeout(() => {
-      users.start();
-      games.start();
-      groups.start();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
+  // Interactive Hero Card State
+  const [joinedHero, setJoinedHero] = useState(false);
 
   return (
-    <div className="min-h-screen bg-grid">
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative overflow-hidden px-4 sm:px-6 pt-16 pb-24">
-        {/* Background effects */}
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full blur-[120px]" />
-        <div className="absolute top-40 right-1/4 w-80 h-80 bg-neon-purple/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-32 bg-gradient-to-t from-surface-900 to-transparent" />
+    <div className="min-h-screen bg-[var(--color-bg-base)] text-white relative">
+      {/* Subtle Grid Pattern Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Tag */}
-          <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.08] rounded-lg px-3 py-1 mb-8 animate-fade-in">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary">Smart Cost-Split Lobby</span>
-          </div>
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-24 md:pt-28 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left: Headline & CTAs */}
+          <div className="lg:col-span-7 text-left space-y-8 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
+              <span className="text-[11px] font-medium tracking-wide text-[var(--color-accent)] font-subheading">
+                Social Multiplayer Marketplace
+              </span>
+            </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 animate-slide-up">
-            Find Your
-            <span className="gradient-text"> Squad</span>
-            <br />
-            Split The Cost
-          </h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              Buy multiplayer <br />
+              games together.
+            </h1>
 
-          <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up stagger-1">
-            SquadUp matches you with gamers who want the same multiplayer games.
-            Team up, split costs, and start playing together.
-          </p>
+            <p className="text-base sm:text-lg text-[var(--color-text-2)] max-w-lg leading-relaxed">
+              Find players planning to buy the same game and split the cost before checkout. Form your group, connect, and play together.
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up stagger-2">
-            <Link href="/login">
-              <Button size="lg" icon={<Gamepad2 className="w-5 h-5" />}>
-                Start Matching — It&apos;s Free
-              </Button>
-            </Link>
-            <a href="#how-it-works">
-              <Button variant="secondary" size="lg">
-                See How It Works
-              </Button>
-            </a>
-          </div>
-
-          {/* Floating game cards (decorative) */}
-          <div className="relative mt-16 max-w-3xl mx-auto">
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { name: 'Minecraft', price: '₹1999', players: '2-10', color: 'from-green-500/20 to-green-600/5' },
-                { name: 'Helldivers 2', price: '₹2499', players: '1-4', color: 'from-brand-500/20 to-brand-600/5' },
-                { name: 'Lethal Company', price: '₹480', players: '1-4', color: 'from-purple-500/20 to-purple-600/5' },
-              ].map((game, i) => (
-                <Card key={game.name} variant="interactive" padding="sm" className={`animate-slide-up stagger-${i + 3}`}>
-                  <div className={`w-full h-20 rounded-xl bg-gradient-to-br ${game.color} mb-3 flex items-center justify-center`}>
-                    <Gamepad2 className="w-8 h-8 text-white/40" />
-                  </div>
-                  <p className="text-sm font-semibold text-text-primary">{game.name}</p>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-xs text-neon-green">{game.price}</span>
-                    <span className="text-xs text-text-muted">{game.players} players</span>
-                  </div>
-                </Card>
-              ))}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link href="/login">
+                <button className="btn-hud-volt font-medium text-sm px-6 py-3 flex items-center gap-1">
+                  Find Players
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </Link>
+              <a href="#how-it-works">
+                <button className="btn-hud-steel font-medium text-sm px-6 py-3">
+                  See How It Works
+                </button>
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ===== STATS ===== */}
-      <section className="px-4 sm:px-6 py-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { value: users.count, label: 'Gamers Joined', suffix: '+', icon: Users },
-              { value: games.count, label: 'Games Tracked', suffix: '+', icon: Gamepad2 },
-              { value: groups.count, label: 'Groups Formed', suffix: '+', icon: Heart },
-            ].map(stat => (
-              <Card key={stat.label} padding="md" className="text-center">
-                <stat.icon className="w-6 h-6 text-brand-400 mx-auto mb-2" />
-                <p className="text-2xl sm:text-3xl font-black gradient-text">
-                  {stat.value.toLocaleString()}{stat.suffix}
-                </p>
-                <p className="text-xs sm:text-sm text-text-muted mt-1">{stat.label}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== HOW IT WORKS ===== */}
-      <section id="how-it-works" className="px-4 sm:px-6 py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-black mb-4">
-              Three Steps to Your <span className="gradient-text">Squad</span>
-            </h2>
-            <p className="text-text-secondary max-w-lg mx-auto">
-              No complicated setup. Just add your games, get matched, and start playing.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                step: '01',
-                icon: ListPlus,
-                title: 'Add Your Games',
-                desc: 'Create your wishlist with games you want to play, your budget, and how many players you need.',
-                color: 'text-neon-cyan',
-                glow: 'glow-cyan',
-              },
-              {
-                step: '02',
-                icon: UserCheck,
-                title: 'Get Matched',
-                desc: 'Our smart matching system finds gamers with similar interests, budgets, and player counts.',
-                color: 'text-brand-400',
-                glow: 'glow-brand',
-              },
-              {
-                step: '03',
-                icon: PartyPopper,
-                title: 'Play Together',
-                desc: 'Join groups, connect on Discord or WhatsApp, and start your multiplayer adventure!',
-                color: 'text-neon-purple',
-                glow: 'glow-purple',
-              },
-            ].map(item => (
-              <Card key={item.step} padding="lg" className={`relative overflow-hidden group hover:${item.glow} transition-all duration-500`}>
-                <span className="absolute top-4 right-4 text-5xl font-black text-white/[0.03]">
-                  {item.step}
-                </span>
-                <div className={`w-12 h-12 rounded-xl bg-surface-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <item.icon className={`w-6 h-6 ${item.color}`} />
+          {/* Right: Beautiful Interactive Card */}
+          <div className="lg:col-span-5 flex justify-center animate-fade-in-scale">
+            <div className="w-full max-w-sm bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl overflow-hidden shadow-2xl">
+              {/* Game Header Graphic */}
+              <div className="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
+                <img 
+                  src="https://cdn.akamai.steamstatic.com/steam/apps/553850/header.jpg" 
+                  alt="Helldivers 2" 
+                  className="w-full h-full object-cover opacity-85"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-card)] to-transparent" />
+                <div className="absolute top-3 right-3">
+                  <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold border transition-colors ${
+                    joinedHero 
+                      ? 'bg-green-500/10 border-green-500/20 text-green-400' 
+                      : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+                  }`}>
+                    {joinedHero ? 'Completed' : 'Looking'}
+                  </span>
                 </div>
-                <h3 className="text-lg font-bold text-text-primary mb-2">{item.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{item.desc}</p>
-              </Card>
-            ))}
+              </div>
+
+              {/* Card Details */}
+              <div className="p-6 space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white leading-tight">Helldivers 2</h3>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-xs text-[var(--color-text-3)] font-medium">Total Cost</span>
+                    <span className="text-sm font-semibold text-white">₹2,499</span>
+                  </div>
+                </div>
+
+                {/* Progress Indicators */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-semibold">
+                    <span className="text-[var(--color-text-2)]">
+                      {joinedHero ? '4 / 4 Players Joined' : '3 / 4 Players Joined'}
+                    </span>
+                    <span className="text-[var(--color-accent)]">
+                      {joinedHero ? '0 slots left' : '1 slot left'}
+                    </span>
+                  </div>
+                  <div className="cap-bar">
+                    <div 
+                      className={`cap-bar-fill transition-all duration-300 ${joinedHero ? 'bg-green-500' : 'bg-[var(--color-accent)]'}`} 
+                      style={{ width: joinedHero ? '100%' : '75%' }} 
+                    />
+                  </div>
+                </div>
+
+                {/* Split Calculation Panel */}
+                <div className="grid grid-cols-2 gap-4 p-4 bg-[var(--color-bg-raised)] border border-[var(--color-bg-border)] rounded-lg">
+                  <div>
+                    <p className="text-[10px] text-[var(--color-text-3)] uppercase tracking-wider font-semibold">Your Share</p>
+                    <p className="text-lg font-bold text-white mt-1">₹625</p>
+                  </div>
+                  <div className="border-l border-[var(--color-bg-border)] pl-4">
+                    <p className="text-[10px] text-[var(--color-text-3)] uppercase tracking-wider font-semibold">Discord Server</p>
+                    <p className="text-xs font-semibold text-[var(--color-text-2)] mt-1.5 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      Ready
+                    </p>
+                  </div>
+                </div>
+
+                {/* Interactive CTA */}
+                <button 
+                  onClick={() => setJoinedHero(!joinedHero)}
+                  className={`w-full py-2.5 rounded-lg text-xs font-bold transition-all duration-200 border ${
+                    joinedHero 
+                      ? 'bg-transparent border-[var(--color-bg-border)] text-[var(--color-text-3)] hover:text-white' 
+                      : 'bg-[var(--color-accent)] border-transparent text-white hover:bg-[var(--color-brand-600)]'
+                  }`}
+                >
+                  {joinedHero ? 'Leave Group' : 'Join Group'}
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-24 border-t border-[var(--color-bg-border)] bg-[var(--color-bg-raised)]/30 relative">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">How GamePool Works</h2>
+            <p className="text-sm text-[var(--color-text-2)]">Five simple steps to multiplayer savings and instant matches.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            
+            {/* Step 1 */}
+            <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-5 space-y-4">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-xs font-bold text-[var(--color-accent)]">
+                01
+              </div>
+              <h3 className="text-sm font-bold text-white">Choose a Game</h3>
+              <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+                Search or browse the Steam catalog and select any multiplayer game you want to buy.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-5 space-y-4">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-xs font-bold text-[var(--color-accent)]">
+                02
+              </div>
+              <h3 className="text-sm font-bold text-white">Set Your Budget</h3>
+              <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+                Decide the maximum price you want to pay. We handle the split calculation instantly.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-5 space-y-4">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-accent-dim)] border border(--color-accent-border)] flex items-center justify-center text-xs font-bold text-[var(--color-accent)]">
+                03
+              </div>
+              <h3 className="text-sm font-bold text-white">Get Matched</h3>
+              <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+                Our algorithm matches you with real players seeking the same game with similar budgets.
+              </p>
+            </div>
+
+            {/* Step 4 */}
+            <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-5 space-y-4">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-xs font-bold text-[var(--color-accent)]">
+                04
+              </div>
+              <h3 className="text-sm font-bold text-white">Join Group Chat</h3>
+              <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+                Connect inside a secure group channel or jump into integrated Discord or WhatsApp rooms.
+              </p>
+            </div>
+
+            {/* Step 5 */}
+            <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-5 space-y-4">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-xs font-bold text-[var(--color-accent)]">
+                05
+              </div>
+              <h3 className="text-sm font-bold text-white">Buy Together</h3>
+              <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+                Split the cost, pool the purchase through Steam family features, and start playing!
+              </p>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ===== FEATURES ===== */}
-      <section className="px-4 sm:px-6 py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-black mb-4">
-              Packed With <span className="gradient-text">Features</span>
-            </h2>
-            <p className="text-text-secondary max-w-lg mx-auto">
-              Everything you need to find your gaming crew.
+      {/* Features Section */}
+      <section className="py-24 border-t border-[var(--color-bg-border)] px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="mb-12 text-left">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Designed for Modern PC Gamers</h2>
+          <p className="text-sm text-[var(--color-text-2)] mt-2">Zero gamer culture noise. Just pure functionality to get you matching and playing.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1 */}
+          <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-6 space-y-4">
+            <Globe className="w-5 h-5 text-[var(--color-accent)]" />
+            <h3 className="text-base font-bold text-white">Region Matching</h3>
+            <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+              Match with squadmates in your local timezone to coordinate game times, avoid high latency issues, and play on matching server locations.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Sparkles, title: 'Smart Recommendations', desc: 'Get game suggestions and cheaper alternatives based on your interests.', color: 'text-neon-cyan' },
-              { icon: Users, title: 'Smart Matching', desc: 'Advanced matching by game, budget, and player count. Even handles abbreviations!', color: 'text-brand-400' },
-              { icon: IndianRupee, title: 'Cost Optimizer', desc: 'See exactly how much each player pays when you split the cost.', color: 'text-neon-green' },
-              { icon: Shield, title: 'Safe & Secure', desc: 'No credentials shared, no payments processed. Just matching and fun.', color: 'text-neon-purple' },
-              { icon: Globe, title: 'Region Matching', desc: 'Find gamers in your region for better ping and play times.', color: 'text-neon-orange' },
-              { icon: Zap, title: 'Instant Groups', desc: 'Create groups and share invite links for Discord or WhatsApp instantly.', color: 'text-neon-yellow' },
-            ].map(feature => (
-              <Card key={feature.title} variant="interactive" padding="md">
-                <feature.icon className={`w-8 h-8 ${feature.color} mb-3`} />
-                <h3 className="text-base font-bold text-text-primary mb-1">{feature.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{feature.desc}</p>
-              </Card>
-            ))}
+          {/* Card 2 */}
+          <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-6 space-y-4">
+            <MessageSquare className="w-5 h-5 text-[var(--color-accent)]" />
+            <h3 className="text-base font-bold text-white">Instant Group Creation</h3>
+            <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+              Skip setup friction. Once matched, a private room opens with instant links to WhatsApp, Telegram, or Discord server invitations.
+            </p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-[var(--color-bg-card)] border border-[var(--color-bg-border)] rounded-xl p-6 space-y-4">
+            <Shield className="w-5 h-5 text-[var(--color-accent)]" />
+            <h3 className="text-base font-bold text-white">Split Trust Protocol</h3>
+            <p className="text-xs text-[var(--color-text-2)] leading-relaxed">
+              We never touch your money or store payment accounts. We match verified profiles, letting players settle splits directly on their terms.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ===== FINAL CTA ===== */}
-      <section className="px-4 sm:px-6 py-24">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-600/20 via-neon-purple/10 to-neon-cyan/20 rounded-3xl blur-xl" />
-            <Card padding="lg" className="relative">
-              <Gamepad2 className="w-12 h-12 text-brand-400 mx-auto mb-4" />
-              <h2 className="text-3xl sm:text-4xl font-black mb-4">
-                Ready to Find Your Squad?
-              </h2>
-              <p className="text-text-secondary mb-8 max-w-md mx-auto">
-                Join thousands of gamers already matching on SquadUp.
-                It&apos;s completely free to get started.
-              </p>
-              <Link href="/login">
-                <Button size="lg" icon={<ArrowRight className="w-5 h-5" />}>
-                  Get Started Now
-                </Button>
-              </Link>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FOOTER ===== */}
-      <footer className="border-t border-white/5 px-4 sm:px-6 py-8">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Gamepad2 className="w-5 h-5 text-brand-400" />
-            <span className="text-sm font-bold text-text-primary">SquadUp</span>
-          </div>
-          <p className="text-xs text-text-muted">
-            © 2026 SquadUp. Made with ❤️ for gamers. Not affiliated with any game publisher.
+      {/* Call to Action */}
+      <section className="py-24 border-t border-[var(--color-bg-border)] relative">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-8">
+          <Gamepad2 className="w-12 h-12 text-[var(--color-accent)] mx-auto opacity-80" />
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+            Find your split group today
+          </h2>
+          <p className="text-sm text-[var(--color-text-2)] max-w-md mx-auto">
+            Stop paying full price for multiplayer. Connect with active gamers and pool your next Steam checkout.
           </p>
-          <div className="flex gap-4">
-            <span className="text-xs text-text-muted">No account sharing • No piracy • Just matching</span>
+          <Link href="/login">
+            <button className="btn-hud-volt font-semibold text-sm px-8 py-3">
+              Find Players
+            </button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-[var(--color-bg-border)] bg-[var(--color-bg-base)] px-4 sm:px-6 lg:px-8 py-12 text-xs text-[var(--color-text-3)]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            <Gamepad2 className="w-4 h-4 text-white" />
+            <span className="font-bold text-white tracking-wide">GamePool</span>
+            <span className="px-2 py-0.5 bg-[var(--color-bg-subtle)] text-[10px] rounded">v1.0.0</span>
+          </div>
+          <div>
+            © 2026 GamePool. All rights reserved. Not affiliated with Valve Corporation or any game publisher.
+          </div>
+          <div className="flex gap-4 font-medium">
+            <span>Status: Operational</span>
           </div>
         </div>
       </footer>

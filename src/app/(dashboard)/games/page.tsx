@@ -415,7 +415,7 @@ export default function GamesPage() {
               <div 
                 key={game.name} 
                 onClick={() => setSelectedGame(game)}
-                className="group relative aspect-[2/3] w-full rounded-xl overflow-hidden border border-white/5 bg-surface-900 shadow-lg cursor-pointer hover:border-neon-volt/40 hover:shadow-[0_0_25px_rgba(210,252,0,0.15)] hover:-translate-y-1.5 transition-all duration-300"
+                className="group relative aspect-[2/3] w-full rounded-lg overflow-hidden border border-white/[0.08] bg-[#11131A] shadow-[0_4px_25px_rgba(0,0,0,0.5)] cursor-pointer hover:border-[var(--color-accent)]/60 hover:shadow-[0_0_30px_rgba(124,92,255,0.2)] hover:-translate-y-1.5 transition-all duration-300"
               >
                 {/* Poster Image */}
                 {posterUrl ? (
@@ -426,34 +426,34 @@ export default function GamesPage() {
                     loading="lazy"
                   />
                 ) : (
-                  <div className={`w-full h-full bg-gradient-to-br ${game.imageGlow || 'from-surface-800 to-surface-700'} flex flex-col items-center justify-center p-4 text-center`}>
-                    <Gamepad2 className="w-10 h-10 text-white/20 mb-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-bold text-text-secondary truncate w-full">{game.name}</span>
+                  <div className={`w-full h-full bg-gradient-to-br ${game.imageGlow || 'from-white/[0.02] to-white/[0.06]'} flex flex-col items-center justify-center p-4 text-center`}>
+                    <Gamepad2 className="w-10 h-10 text-white/10 mb-2 group-hover:scale-110 transition-transform text-[var(--color-accent)]" />
+                    <span className="text-[11px] font-bold text-[var(--color-text-2)] uppercase tracking-wider truncate w-full">{game.name}</span>
                   </div>
                 )}
 
                 {/* Dark Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90 group-hover:via-black/20 transition-all" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent opacity-95 group-hover:via-black/25 transition-all" />
 
                 {/* Active Lobbies Telemetry Pip */}
-                <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/80 px-2 py-1 rounded-md border border-white/5 text-[9px] font-bold text-white/90">
-                  <span className={groupsCount > 0 ? "pip-active" : "w-1.5 h-1.5 bg-text-muted rounded-full"}></span>
+                <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 bg-black/85 px-2 py-1 rounded border border-white/10 text-[9px] font-mono font-bold text-white tracking-widest uppercase">
+                  <span className={groupsCount > 0 ? "w-2 h-2 rounded-full bg-[var(--color-green)] animate-pulse shadow-[0_0_6px_var(--color-green)]" : "w-1.5 h-1.5 bg-[var(--color-text-3)] rounded-full"}></span>
                   {groupsCount} LOBB{groupsCount === 1 ? 'Y' : 'IES'}
                 </div>
 
                 {/* Price Tag Badge */}
-                <div className="absolute top-2 right-2 bg-neon-volt text-black text-[10px] font-black px-2 py-0.5 rounded shadow-md tracking-wider">
+                <div className="absolute top-2.5 right-2.5 bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-light)] text-white text-[10px] font-black px-2.5 py-0.5 rounded shadow-lg tracking-wider font-heading">
                   {game.estimatedPrice === 0 ? 'FREE' : `₹${game.estimatedPrice}`}
                 </div>
 
                 {/* Poster Info Footer */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 space-y-1.5">
-                  <h3 className="font-heading text-xs font-black text-white truncate text-neon-glow-volt group-hover:text-neon-volt transition-colors">
+                <div className="absolute bottom-0 left-0 right-0 p-4.5 space-y-2 bg-gradient-to-t from-black via-black/80 to-transparent">
+                  <h3 className="font-heading text-[14px] font-black text-white truncate group-hover:text-[var(--color-blue)] transition-colors uppercase tracking-wide">
                     {game.name}
                   </h3>
-                  <div className="flex items-center justify-between text-[9px] text-text-secondary font-subheading">
-                    <span className="text-text-muted group-hover:text-white transition-colors">CAP: {game.playerCount} PLAYERS</span>
-                    <span className="text-neon-cyan font-bold">SPLIT AVAILABLE</span>
+                  <div className="flex items-center justify-between text-[9px] text-[var(--color-text-3)] font-mono tracking-widest uppercase">
+                    <span>CAP: {game.playerCount} Players</span>
+                    <span className="text-[var(--color-blue)] font-bold">Split Ready</span>
                   </div>
                 </div>
               </div>

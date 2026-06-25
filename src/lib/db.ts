@@ -334,6 +334,7 @@ export async function seedMockData(): Promise<void> {
 
 // ======================== CHATROOMS ========================
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function subscribeToMessages(groupId: string, callback: (messages: any[]) => void) {
   const dbInst = getFirebaseDb();
   if (!dbInst) return () => {};

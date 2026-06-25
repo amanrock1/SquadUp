@@ -38,14 +38,15 @@ export default function LoginPage() {
     try {
       if (isSignup) {
         await signup(email, password, username);
-        toast('success', 'Account created! Welcome to SquadUp 🎮');
+        toast('success', 'Account created! Welcome to GamePool 🎮');
       } else {
         await login(email, password);
         toast('success', 'Welcome back!');
       }
       router.push('/dashboard');
-    } catch (err: any) {
-      const msg = err?.message || '';
+    } catch (err) {
+      const errorObj = err as { message?: string };
+      const msg = errorObj?.message || '';
       if (msg.includes('email-already-in-use')) toast('error', 'Email already registered. Try logging in.');
       else if (msg.includes('wrong-password') || msg.includes('invalid-credential')) toast('error', 'Invalid email or password.');
       else if (msg.includes('user-not-found')) toast('error', 'No account found. Sign up instead?');
@@ -61,43 +62,46 @@ export default function LoginPage() {
       await loginWithGoogle();
       toast('success', 'Signed in with Google!');
       router.push('/dashboard');
-    } catch (err: any) {
-      toast('error', err?.message || 'Google sign-in failed');
+    } catch (err) {
+      const errorObj = err as { message?: string };
+      toast('error', errorObj?.message || 'Google sign-in failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--color-bg-base)' }}>
-      <div className="w-full max-w-sm animate-fade-in">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--color-bg-base)] relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[var(--color-accent)]/5 blur-[120px] pointer-events-none" />
+
+      <div className="w-full max-w-sm animate-fade-in relative z-10">
 
         {/* Logo / brand */}
         <div className="text-center mb-8">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-            style={{ background: 'var(--color-accent)', boxShadow: '0 0 24px rgba(255,107,53,0.35)' }}
+            className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-4 bg-[var(--color-accent)] shadow-sm"
           >
-            <Gamepad2 className="w-6 h-6 text-white" />
+            <Gamepad2 className="w-5 h-5 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-white">
-            {isSignup ? 'Create account' : 'Welcome back'}
+          <h1 className="text-2xl font-bold text-white font-heading tracking-tight">
+            {isSignup ? 'Create Account' : 'Sign In'}
           </h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--color-text-2)' }}>
+          <p className="text-xs mt-1.5 text-[var(--color-text-2)] font-subheading">
             {isSignup
-              ? 'Sign up to find your squad and split game costs.'
-              : 'Sign in to continue your gaming journey.'}
+              ? 'Join to split game costs and play together.'
+              : 'Sign in to access your GamePool dashboard.'}
           </p>
         </div>
 
         {/* Card */}
-        <div className="hud-panel p-6 space-y-5">
-
+        <div className="bg-[var(--color-bg-card)] p-6 space-y-6 border border-[var(--color-bg-border)] shadow-xl rounded-xl relative">
+          
           {/* Google */}
           <Button
             variant="secondary"
             size="lg"
-            className="w-full"
+            className="w-full border border-[var(--color-bg-border)] hover:bg-white/[0.02]"
             onClick={handleGoogle}
             loading={loading}
             icon={
@@ -114,9 +118,9 @@ export default function LoginPage() {
 
           {/* Divider */}
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-px" style={{ background: 'var(--color-bg-border)' }} />
-            <span className="text-[11px]" style={{ color: 'var(--color-text-3)' }}>or with email</span>
-            <div className="flex-1 h-px" style={{ background: 'var(--color-bg-border)' }} />
+            <div className="flex-1 h-px bg-[var(--color-bg-border)]" />
+            <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-3)] font-semibold">or email</span>
+            <div className="flex-1 h-px bg-[var(--color-bg-border)]" />
           </div>
 
           {/* Form */}
@@ -128,7 +132,7 @@ export default function LoginPage() {
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 error={errors.username}
-                icon={<User className="w-4 h-4" />}
+                icon={<User className="w-4 h-4 text-[var(--color-text-3)]" />}
               />
             )}
             <Input
@@ -138,7 +142,7 @@ export default function LoginPage() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               error={errors.email}
-              icon={<Mail className="w-4 h-4" />}
+              icon={<Mail className="w-4 h-4 text-[var(--color-text-3)]" />}
             />
             <Input
               label="Password"
@@ -147,23 +151,22 @@ export default function LoginPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               error={errors.password}
-              icon={<Lock className="w-4 h-4" />}
+              icon={<Lock className="w-4 h-4 text-[var(--color-text-3)]" />}
             />
 
-            <Button type="submit" size="lg" className="w-full" loading={loading}>
-              {isSignup ? 'Create account' : 'Sign in'}
+            <Button type="submit" size="lg" className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-brand-600)] border-none text-white font-medium transition-all mt-2">
+              {isSignup ? 'Create Account' : 'Sign In'}
             </Button>
           </form>
 
           {/* Toggle */}
-          <p className="text-center text-sm" style={{ color: 'var(--color-text-2)' }}>
+          <p className="text-center text-xs text-[var(--color-text-2)]">
             {isSignup ? 'Already have an account?' : "Don't have an account?"}{' '}
             <button
               onClick={() => { setIsSignup(!isSignup); setErrors({}); }}
-              className="font-semibold transition-colors hover:opacity-80"
-              style={{ color: 'var(--color-accent)' }}
+              className="font-bold text-[var(--color-accent)] hover:text-[var(--color-accent-light)] transition-colors ml-1"
             >
-              {isSignup ? 'Sign in' : 'Sign up'}
+              {isSignup ? 'Sign In' : 'Sign Up'}
             </button>
           </p>
         </div>

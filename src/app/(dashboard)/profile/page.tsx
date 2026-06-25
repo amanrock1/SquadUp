@@ -7,10 +7,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/Toast';
-import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
 import { updateUserProfile, getUserWishlist, getUserGroups } from '@/lib/db';
 import {
   UserCircle, Save, Star, Gamepad2, Users,
@@ -81,34 +79,38 @@ export default function ProfilePage() {
     <div className="space-y-6 max-w-2xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black flex items-center gap-2">
-          <UserCircle className="w-6 h-6 text-brand-400" />
-          Profile
+        <h1 className="text-2xl font-bold flex items-center gap-2 font-heading tracking-tight text-white">
+          <UserCircle className="w-6 h-6 text-[var(--color-accent)]" />
+          Your Profile
         </h1>
-        <p className="text-sm text-text-secondary mt-1">
-          Manage your account and preferences.
+        <p className="text-xs text-[var(--color-text-3)] font-medium mt-1">
+          Manage your account preferences, region, and budget thresholds.
         </p>
       </div>
 
-      {/* Profile card */}
-      <Card padding="lg">
-        <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/5">
-          <div className="w-16 h-16 bg-brand-600/30 border-2 border-brand-500/30 rounded-2xl flex items-center justify-center">
-            <span className="text-2xl font-black text-brand-300">
-              {(profile?.username || 'G')[0].toUpperCase()}
+      {/* Profile Card */}
+      <div className="border border-[var(--color-bg-border)] bg-[var(--color-bg-card)] rounded-xl p-6 relative overflow-hidden">
+        
+        <div className="flex flex-col sm:flex-row sm:items-center gap-5 mb-6 pb-6 border-b border-[var(--color-bg-border)]">
+          <div className="w-16 h-16 bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] rounded-xl flex items-center justify-center shrink-0 relative group">
+            <span className="text-2xl font-bold text-white font-heading">
+              {(profile?.username || 'U')[0].toUpperCase()}
             </span>
+            <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-[var(--color-green)] border-2 border-[var(--color-bg-card)] rounded-full" />
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-text-primary">{profile?.username}</h2>
-            <p className="text-sm text-text-secondary">{user?.email}</p>
-            <div className="flex items-center gap-3 mt-1">
-              <div className="flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 text-neon-yellow" />
-                <span className="text-xs font-medium text-text-primary">{profile?.rating?.toFixed(1) || '5.0'}</span>
+          <div className="flex-1">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h2 className="text-xl font-bold text-white tracking-wide leading-none">{profile?.username}</h2>
+            </div>
+            <p className="text-xs text-[var(--color-text-3)] font-semibold mt-2">{user?.email}</p>
+            <div className="flex items-center gap-4 mt-2.5 text-xs text-[var(--color-text-2)] font-semibold">
+              <div className="flex items-center gap-1 font-subheading">
+                <Star className="w-3.5 h-3.5 text-[var(--color-yellow)]" />
+                <span className="text-white">{profile?.rating?.toFixed(1) || '5.0'}</span>
               </div>
-              <span className="text-xs text-text-muted">·</span>
-              <span className="text-xs text-text-muted flex items-center gap-1">
-                <Calendar className="w-3 h-3" /> Member since {memberSince}
+              <span className="text-white/10">|</span>
+              <span className="flex items-center gap-1 font-subheading text-[11px] text-[var(--color-text-3)]">
+                <Calendar className="w-3.5 h-3.5" /> Member since {memberSince}
               </span>
             </div>
           </div>
@@ -116,53 +118,58 @@ export default function ProfilePage() {
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="text-center p-3 rounded-xl bg-surface-800/50">
-            <Gamepad2 className="w-5 h-5 text-brand-400 mx-auto mb-1" />
-            <p className="text-lg font-bold text-text-primary">{stats.wishlistCount}</p>
-            <p className="text-xs text-text-muted">Games</p>
+          <div className="text-center p-3.5 rounded-lg border border-[var(--color-bg-border)] bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
+            <Gamepad2 className="w-4.5 h-4.5 text-[var(--color-accent)] mx-auto mb-1.5" />
+            <p className="text-lg font-bold text-white font-heading">{stats.wishlistCount}</p>
+            <p className="text-[10px] font-semibold text-[var(--color-text-3)] uppercase tracking-wider mt-0.5">Games</p>
           </div>
-          <div className="text-center p-3 rounded-xl bg-surface-800/50">
-            <Users className="w-5 h-5 text-neon-purple mx-auto mb-1" />
-            <p className="text-lg font-bold text-text-primary">{stats.groupCount}</p>
-            <p className="text-xs text-text-muted">Groups</p>
+          <div className="text-center p-3.5 rounded-lg border border-[var(--color-bg-border)] bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
+            <Users className="w-4.5 h-4.5 text-[var(--color-accent-light)] mx-auto mb-1.5" />
+            <p className="text-lg font-bold text-white font-heading">{stats.groupCount}</p>
+            <p className="text-[10px] font-semibold text-[var(--color-text-3)] uppercase tracking-wider mt-0.5">Groups</p>
           </div>
-          <div className="text-center p-3 rounded-xl bg-surface-800/50">
-            <Star className="w-5 h-5 text-neon-yellow mx-auto mb-1" />
-            <p className="text-lg font-bold text-text-primary">{profile?.rating?.toFixed(1) || '5.0'}</p>
-            <p className="text-xs text-text-muted">Rating</p>
+          <div className="text-center p-3.5 rounded-lg border border-[var(--color-bg-border)] bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
+            <Star className="w-4.5 h-4.5 text-[var(--color-yellow)] mx-auto mb-1.5" />
+            <p className="text-lg font-bold text-white font-heading">{profile?.rating?.toFixed(1) || '5.0'}</p>
+            <p className="text-[10px] font-semibold text-[var(--color-text-3)] uppercase tracking-wider mt-0.5">Reputation</p>
           </div>
         </div>
 
-        {/* Edit form */}
-        <div className="space-y-4">
+        {/* Edit Form */}
+        <div className="space-y-5 pt-3 border-t border-[var(--color-bg-border)]">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-3)]">Profile Settings</h3>
+          
           <Input
             label="Username"
             value={username}
             onChange={e => setUsername(e.target.value)}
-            icon={<UserCircle className="w-4 h-4" />}
+            icon={<UserCircle className="w-4 h-4 text-[var(--color-text-3)]" />}
+            className="hud-input text-sm"
           />
 
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Min Budget (₹)"
+              label="Min Split Budget (₹)"
               type="number"
               value={budgetMin}
               onChange={e => setBudgetMin(e.target.value)}
-              icon={<IndianRupee className="w-4 h-4" />}
+              icon={<IndianRupee className="w-4 h-4 text-[var(--color-text-3)]" />}
               min="0"
+              className="hud-input text-sm"
             />
             <Input
-              label="Max Budget (₹)"
+              label="Max Split Budget (₹)"
               type="number"
               value={budgetMax}
               onChange={e => setBudgetMax(e.target.value)}
-              icon={<IndianRupee className="w-4 h-4" />}
+              icon={<IndianRupee className="w-4 h-4 text-[var(--color-text-3)]" />}
               min="0"
+              className="hud-input text-sm"
             />
           </div>
 
           <Select
-            label="Region (optional)"
+            label="Region"
             value={region}
             onChange={e => setRegion(e.target.value)}
             options={[
@@ -177,24 +184,29 @@ export default function ProfilePage() {
             ]}
           />
 
-          <Button onClick={handleSave} loading={saving} icon={<Save className="w-4 h-4" />}>
-            Save Changes
+          <Button 
+            onClick={handleSave} 
+            loading={saving} 
+            icon={<Save className="w-3.5 h-3.5" />}
+            className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-brand-600)] text-white border-none font-semibold mt-2"
+          >
+            Save Profile Settings
           </Button>
         </div>
-      </Card>
+      </div>
 
       {/* Security info */}
-      <Card padding="md" className="opacity-80">
+      <div className="p-4 border border-[var(--color-bg-border)] bg-[var(--color-bg-card)] rounded-xl opacity-90">
         <div className="flex items-center gap-3">
-          <Shield className="w-5 h-5 text-neon-green" />
+          <Shield className="w-5 h-5 text-[var(--color-green)] shrink-0" />
           <div>
-            <p className="text-sm font-medium text-text-primary">Your data is safe</p>
-            <p className="text-xs text-text-muted">
-              SquadUp never stores passwords, game credentials, or payment info. We only store what&apos;s needed for matching.
+            <p className="text-xs font-bold text-white uppercase tracking-wider">Secure Cost Splits</p>
+            <p className="text-[11px] text-[var(--color-text-3)] mt-0.5 leading-relaxed font-semibold">
+              GamePool matches you with other players. Settle checkouts directly through Steam Family or preferred payment apps.
             </p>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
